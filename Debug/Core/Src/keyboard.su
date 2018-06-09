@@ -1,0 +1,2 @@
+keyboard.c:10:6:keyboardInit	8	static
+keyboard.c:20:6:keyboardRuntime	8	static

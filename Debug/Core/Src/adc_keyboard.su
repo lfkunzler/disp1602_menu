@@ -1,0 +1,2 @@
+adc_keyboard.c:14:6:keyboard_init	0	static
+adc_keyboard.c:19:9:keyboard_read	8	static

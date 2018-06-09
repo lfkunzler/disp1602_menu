@@ -1,7 +1,9 @@
-menu.c:10:6:menuInit	0	static
-menu.c:16:6:menuSetPos	0	static
-menu.c:46:6:menuRunTime	8	static
-menu.c:56:6:__menuSetPos	8	static
-menu.c:21:6:menuNext	8	static
-menu.c:31:6:menuPrev	8	static
-menu.c:40:6:menuReset	0	static
+menu.c:12:6:Menu_Init	0	static
+menu.c:17:6:Menu_SetPosition	0	static
+menu.c:22:6:_Menu_EnterPosition	8	static
+menu.c:29:6:Menu_Next	8	static
+menu.c:40:6:Menu_Prev	8	static
+menu.c:49:6:Menu_SetKey	0	static
+menu.c:54:6:Menu_Draw	0	static
+menu.c:59:6:Menu_Reset	8	static
+menu.c:66:6:Menu_Runtime	0	static

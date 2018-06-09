@@ -2,7 +2,7 @@
  * menu.c
  *
  *  Created on: 19 de mai de 2018
- *      Author: luis
+ *      Author: Luis Felipe Kunzler
  */
 
 #include "menu.h"
