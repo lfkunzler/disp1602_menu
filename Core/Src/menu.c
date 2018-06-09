@@ -7,69 +7,62 @@
 
 #include "menu.h"
 
-void _Menu_EnterPosition(uint8_t pos);
+void _menuEnterPosition(uint8_t pos);
 
-void Menu_Init()
-{
+void menuInit() {
 
 }
 
-void Menu_SetPosition(uint8_t pos, MenuItem *item)
-{
+void menuGoto(uint8_t pos) {
+	_menuEnterPosition(pos);
+}
+
+void menuSetPosition(uint8_t pos, MenuItem *item) {
 	Menu.Items[pos] = item;
 }
 
-void _Menu_EnterPosition(uint8_t pos)
-{
+void _menuEnterPosition(uint8_t pos) {
 	Menu.Current = Menu.Items[pos];
 	Menu.Current->Enter();
 	Menu.NeedsRedraw = 1;
 }
 
-void Menu_Next()
-{
+void menuNext() {
 	Menu.Index++;
 
 	Menu.Current->Exit();
 	if (Menu.Index >= MENU_ITEMS_COUNT)
 		Menu.Index = 0;
 
-	_Menu_EnterPosition(Menu.Index);
+	_menuEnterPosition(Menu.Index);
 }
 
-void Menu_Prev()
-{
+void menuPrev() {
 	Menu.Current->Exit();
 	if (Menu.Index > 0)
 		Menu.Index--;
 
-	_Menu_EnterPosition(Menu.Index);
+	_menuEnterPosition(Menu.Index);
 }
 
-void Menu_SetKey(uint8_t key)
-{
+void menuSetKey(KEYS key) {
 	Menu.Current->KeyPressed(key);
 }
 
-void Menu_Draw()
-{
+void menuDraw() {
 	Menu.NeedsRedraw = 1;
 }
 
-void Menu_Reset()
-{
+void menuReset() {
 	Menu.Current->Exit();
 	Menu.Index = 0;
-	_Menu_EnterPosition(Menu.Index);
+	_menuEnterPosition(Menu.Index);
 }
 
-void Menu_Runtime()
-{
-	if (Menu.NeedsRedraw)
-	{
+void menuRuntime() {
+	if (Menu.NeedsRedraw) {
 		Menu.NeedsRedraw = 0;
-		if (Menu.Current)
-		{
+		if (Menu.Current) {
 			Menu.Current->Render();
 		}
 	}

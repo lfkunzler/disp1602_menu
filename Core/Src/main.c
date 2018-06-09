@@ -45,12 +45,15 @@
 /* USER CODE BEGIN Includes */
 #include "display.h"
 #include "keyboard.h"
+#include "menu.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
+LCD lcd;
+volatile uint8_t tempo = 0;
 
 /* USER CODE END PV */
 
@@ -64,9 +67,21 @@ void SystemClock_Config(void);
 
 /* USER CODE BEGIN 0 */
 
-LCD lcd;
+void HAL_SYSTICK_Callback(void) {
+	if (tempo > 20) { // se passou 20ms
+		tempo = 0;
+		menuDraw();
+	}
 
+	tempo++;
+}
+
+// implementacao do calback do teclado
 void onKeyPressed(KEYS key) {
+	if (key != KEYNONE) {
+	menuSetKey(key);
+	}
+	/*
 	switch (key) {
 	case KEYNONE:
 		// nenhuma tecla pressionada
@@ -90,7 +105,61 @@ void onKeyPressed(KEYS key) {
 
 		break;
 	}
+	*/
 }
+
+
+/* impleentacao dos callback do menu 1 */
+void OnEnterMenu1() {
+
+}
+
+void OnRenderMenu1() {
+	lcdWrite(&lcd, "menu 1\0", 0, 0);
+}
+
+void OnKeyMenu1(KEYS key) {
+	menuGoto(1);
+
+}
+
+void OnExitMenu1() {
+
+}
+
+/* impleentacao dos callback do menu 2 */
+void OnEnterMenu2() {
+
+}
+
+void OnRenderMenu2() {
+	lcdWrite(&lcd, "menu 2\0", 0, 0);
+}
+
+void OnKeyMenu2(KEYS key) {
+
+	menuGoto(0);
+}
+
+void OnExitMenu2() {
+
+}
+
+// cria uma variavel do tipo menu
+MenuItem menu1 = {
+		OnEnterMenu1,
+		OnRenderMenu1,
+		OnKeyMenu1,
+		OnExitMenu1
+};
+
+MenuItem menu2 = {
+		OnEnterMenu2,
+		OnRenderMenu2,
+		OnKeyMenu2,
+		OnExitMenu2
+};
+
 /* USER CODE END 0 */
 
 /**
@@ -100,7 +169,7 @@ void onKeyPressed(KEYS key) {
  */
 int main(void) {
 	/* USER CODE BEGIN 1 */
-	char recebido[] = "AEHO\x20";
+	//char recebido[] = "AEHO\x20";
 	//lcd.NeedsRedraw = 0;
 	//lcd.Memory = {0, 0};
 	/* USER CODE END 1 */
@@ -128,6 +197,13 @@ int main(void) {
 	/* USER CODE BEGIN 2 */
 	lcdInit(&lcd);
 	lcdWrite(&lcd, "Kunzler\0", 1, 4);
+	menuInit();
+	// instala os menus
+	menuSetPosition(0, &menu1);
+	menuSetPosition(1, &menu2);
+
+	menuGoto(0); // vai para a posicao 0
+
 	keyboardInit(&onKeyPressed);
 	// para o mestre
 	//HAL_GPIO_WritePin(TX_EN_GPIO_Port, TX_EN_Pin, 1);
@@ -151,6 +227,7 @@ int main(void) {
 		/* USER CODE BEGIN 3 */
 		lcdRuntTime(&lcd);
 		keyboardRuntime();
+		menuRuntime();
 		// mestre
 		//HAL_UART_Transmit(&huart2, recebido, 4, 10);
 		//HAL_Delay(100);

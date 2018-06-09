@@ -10,11 +10,13 @@
 #define INC_MENU_H_
 #include <stdint.h>
 
+#include "keyboard.h"
+
 #define MENU_ITEMS_COUNT 4
 
 typedef void (*OnEnter)();
 typedef void (*OnRender)();
-typedef void (*OnKey)(char key);
+typedef void (*OnKey)(KEYS key);
 typedef void (*OnExit)();
 
 typedef struct _MenuItem
@@ -33,14 +35,15 @@ struct _Menu
 	MenuItem* Items[MENU_ITEMS_COUNT];
 } Menu;
 
-void Menu_Init();
-void Menu_SetPosition(uint8_t pos, MenuItem *item);
-void Menu_Next();
-void Menu_Prev();
-void Menu_Reset();
-void Menu_Runtime();
-void Menu_SetKey(uint8_t key);
+void menuInit();
+void menuGoto(uint8_t pos);
+void menuSetPosition(uint8_t pos, MenuItem *item);
+void menuNext();
+void menuPrev();
+void menuReset();
+void menuRuntime();
+void menuSetKey(KEYS key);
 // Required execution rate = 50hz;
-void Menu_Draw();
+void menuDraw();
 
 #endif /* INC_MENU_H_ */
