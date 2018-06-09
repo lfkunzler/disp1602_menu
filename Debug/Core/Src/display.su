@@ -1,0 +1,4 @@
+display.c:9:6:lcdInit	8	static
+display.c:52:6:lcdWrite	16	static
+display.c:64:6:lcdRuntTime	16	static
+display.c:80:6:lcdCmdWrite	0	static

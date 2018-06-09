@@ -1,0 +1,4 @@
+ADM1602s.c:11:6:lcd_init	0	static
+ADM1602s.c:16:6:lcd_write	16	static
+ADM1602s.c:37:6:lcd_cmd_write	16	static
+ADM1602s.c:55:6:lcd_set_addr	16	static
